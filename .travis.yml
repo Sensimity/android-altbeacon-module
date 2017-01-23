@@ -13,9 +13,9 @@ before_install:
 - MODULE_ROOT=$PWD
 - brew update
 - brew install nvm
-- nvm install 4
+- nvm install 4.7.0
 - npm config delete prefix
-- nvm use --delete-prefix v4.4.7 4
+- nvm use --delete-prefix v4.4.7 4.7.0
 - rvm get head
 
 install:
