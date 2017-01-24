@@ -40,3 +40,4 @@ deploy:
   on:
     repo: sensimity/com.drtech.altbeacon
     tags: true
+
