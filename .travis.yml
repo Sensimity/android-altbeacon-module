@@ -38,6 +38,6 @@ deploy:
   file:
     - $MODULE_ROOT/android/dist/com.drtech.altbeacon-android-${TRAVIS_TAG}.zip
   on:
-    repo: sensimity/android-altbeacon-module
+    repo: Sensimity/android-altbeacon-module
     tags: true
 
