@@ -1,0 +1,43 @@
+os: osx
+
+env:
+  global:
+  - MODULE_NAME=com.drtech.altbeacon
+
+cache:
+  directories:
+  - node_modules
+  - $HOME/android-ndk-r11c
+
+before_install:
+- MODULE_ROOT=$PWD
+- brew update
+- brew install nvm
+- nvm install 4.7.0
+- npm config delete prefix
+- nvm use --delete-prefix v4.4.7 4.7.0
+- rvm get head
+
+install:
+- cd $MODULE_ROOT
+- curl -o install.sh https://raw.githubusercontent.com/williamrijksen/ci/v8/travis/install.sh
+- source install.sh -s "--branch master"
+
+before_script:
+- curl -o script.sh https://raw.githubusercontent.com/williamrijksen/ci/v8/travis/script.sh
+- chmod +x script.sh
+
+script:
+- MODULE_ROOT=$MODULE_ROOT bash script.sh
+
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: r/TYof19t6bmAAou+l0KaQyfq6LUvlOYYGijus2kSil/i6FNDy8mMRL5XRqETFiHIU9RD1o5I9b4ATaUBKQSCePwMMKqrHpOKqNPV9K6RrO/9I4uQVvKrZilZEguXPsYWg06Q6Bbdan8/ZkKlXk9Q0Jlc9ScLQ4LbhEiZXKoBNpytklyy29NQwsytYQdI2N9LqAeiBUFBZb821w4lR1lKSKcArD+fyIXnt+c6DOgD0lLj9YGGQ3qfL1NojXLxiZv2luCb3y17TVx2N6k76R07lLgGpu7+AsOquxCzWxFOUtKbAXe7gyGF9CkSNv6jg3Z+rE10A3vR+cv9HNk/1sx+xMFQbDAeuJWsj3yFWHrR0bXX3KcY17xAiGgRSvZvXy73OQ0q5JfH2uOzC/ZL41sDd+Veyvv/hvA0q24bFxL8YaPfxhVnHvzsowjVWrUcFho0KFGIAIseKUdo0oG0Y6gS52e1GM+pRAvODKeG0lTs9CX3lSHgesXhLXlJ1rCssVAmIoejGtny+wEn92DqOW2jqb4V4grDnsHKUUrockloRGbWMZIf7IhwLfcYpC98stvYnAxTiRt0C97yNYasNMYpsNRqRaFWqPxXc3xxkxNzx12rO76D85PVylT5m3hvGHgvXiUH5LBXhjGrROYk56DHT8JTzGjLjYrelXwZIELKzY=
+  file:
+    - $MODULE_ROOT/android/dist/com.drtech.altbeacon-android-${TRAVIS_TAG}.zip
+  on:
+    repo: Sensimity/android-altbeacon-module
+    tags: true
+
